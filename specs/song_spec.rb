@@ -4,7 +4,7 @@ require_relative("../song.rb")
 
 class TestSong < MiniTest::Test
 
-  def setupI()
+  def setup()
     @song1 = Song.new("Total Eclipse of the Heart", "Bonnie Tyler")
   end
 
