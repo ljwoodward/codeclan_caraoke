@@ -31,7 +31,11 @@ class Room
     @guests.delete(guest)
   end
 
-  def room_is_full
+  def check_favourite(guest)
+    song_names = @songs.map {|song| song.title}
+    if song_names.include?(guest.favourite_song())
+      return "Yes! My favourite song!"
+    end
 
   end
 
