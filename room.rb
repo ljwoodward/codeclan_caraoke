@@ -1,12 +1,14 @@
 class Room
 
-  attr_reader(:name, :songs, :guests)
+  attr_reader(:name, :songs, :guests, :takings)
 
   def initialize(name)
     @name = name
     @guests = Array.new
     @songs = Array.new
     @room_size = 2
+    @price = 10
+    @takings = 0
   end
 
   def add_song(song)
@@ -16,8 +18,12 @@ class Room
   def check_in_guest(guest)
     if @guests.count() >= @room_size
       return "Sorry, room is full"
-    else
+    elsif guest.money > @price
       @guests << guest
+      guest.money -= @price
+      @takings += @price
+    else
+      return "Insufficient funds"
     end
   end
 

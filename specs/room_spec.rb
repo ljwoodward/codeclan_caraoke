@@ -8,18 +8,17 @@ require("pry")
 class TestRoom < MiniTest::Test
 
   def setup()
-    @room1 = Room.new("The Croon Room")
+    @room1 = Room.new("Horrorshow")
     @song1 = Song.new("Total Eclipse of the Heart", "Bonnie Tyler")
-    @guest1 = Guest.new("Gunther")
-    @guest2 = Guest.new("Rudyard")
-    @guest3 = Guest.new("Boutros")
+    @guest1 = Guest.new("Gunther", 50)
+    @guest2 = Guest.new("Rudyard", 30)
+    @guest3 = Guest.new("Boutros", 9)
 
-    @room2 = Room.new("Horrorshow")
 
   end
 
   def test_get_room_name
-    assert_equal(@room1.name, "The Croon Room")
+    assert_equal(@room1.name, "Horrorshow")
   end
 
   def test_add_song_to_room
@@ -33,18 +32,30 @@ class TestRoom < MiniTest::Test
   end
 
   def test_check_out_guest
-    @room2.check_in_guest(@guest1)
-    @room2.check_in_guest(@guest2)
+    @room1.check_in_guest(@guest1)
+    @room1.check_in_guest(@guest2)
 
-    @room2.check_out_guest(@guest1)
-    assert_equal(@room2.guests().count(), 1)
+    @room1.check_out_guest(@guest1)
+    assert_equal(@room1.guests().count(), 1)
   end
 
   def test_room_is_full
-    @room2.check_in_guest(@guest1)
-    @room2.check_in_guest(@guest2)
-    result = @room2.check_in_guest(@guest3)
+    @room1.check_in_guest(@guest1)
+    @room1.check_in_guest(@guest2)
+    result = @room1.check_in_guest(@guest3)
     assert_equal(result, "Sorry, room is full")
+  end
+
+  def test_guest_paid__can_afford
+    @room1.check_in_guest(@guest1)
+    assert_equal(@guest1.money, 40)
+    assert_equal(@room1.takings, 10)
+  end
+
+  def test_guest_paid__cannot_afford
+    result = @room1.check_in_guest(@guest3)
+    assert_equal(result, "Insufficient funds")
+    assert_equal(@room1.takings, 0)
   end
 
 
