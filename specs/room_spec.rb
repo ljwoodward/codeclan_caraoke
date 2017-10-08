@@ -12,6 +12,7 @@ class TestRoom < MiniTest::Test
     @song1 = Song.new("Total Eclipse of the Heart", "Bonnie Tyler")
     @guest1 = Guest.new("Gunther")
     @guest2 = Guest.new("Rudyard")
+    @guest3 = Guest.new("Boutros")
 
     @room2 = Room.new("Horrorshow")
 
@@ -38,6 +39,14 @@ class TestRoom < MiniTest::Test
     @room2.check_out_guest(@guest1)
     assert_equal(@room2.guests().count(), 1)
   end
+
+  def test_room_is_full
+    @room2.check_in_guest(@guest1)
+    @room2.check_in_guest(@guest2)
+    result = @room2.check_in_guest(@guest3)
+    assert_equal(result, "Sorry, room is full")
+  end
+
 
 
 end
